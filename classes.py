@@ -46,7 +46,7 @@ class GameMap:
             for j in range(self.map_x):
                 if self.map[j][i] == -1:
                     self.map[j][i] = choice([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-                                             colored('E', 'green'), colored('E', 'yellow'), colored('E', 'red'), colored('+', 'red')])
+                                             colored('E', 'green'), colored('E', 'yellow'), colored('E', 'red'), colored('+', 'red'), colored('e', 'yellow')])
         self.map[self.boss_y][self.boss_x] = colored('B', 'magenta')
         
         
@@ -63,6 +63,9 @@ class GameMap:
 
         if self.map[self.player_pos_y][self.player_pos_x] == colored('E', 'green'):
             return 'goblin'
+
+        if self.map[self.player_pos_y][self.player_pos_x] == colored('e', 'yellow'):
+            return 'dwarf'
 
         if self.map[self.player_pos_y][self.player_pos_x] == colored('E', 'yellow'):
             return 'troll'
@@ -107,7 +110,7 @@ class GameMap:
             return False
 # end MAP #
 
-enemies = ['Goblin','Troll','Ork']
+enemies = ['Goblin','Troll','Ork','Dwarf']
 
 # ######### CHARACTERS ######### #
 class Character(GameMap):
@@ -325,13 +328,11 @@ class Player(Character, GameMap):
 class Enemy(Character):
     def __init__(self):
         Character.__init__(self)
-        self.action = None
-        self.active_effect = None
+        self.action = None        
         self.xp_bonus = 0
 
     def showhp(self):
         return self.name, self.hp
-
 
 class EnemyGoblin(Enemy):
     def __init__(self, p):
@@ -344,11 +345,20 @@ class EnemyGoblin(Enemy):
         choices = [healthpotion,manapotion,xppotion]
         self.inventory = [choice(choices)]
 
+class EnemyDwarf(Enemy):
+    def __init__(self, p):
+        Enemy.__init__(self)
+        self.xp_bonus = 35
+        self.name = 'Dwarf'
+        self.hp = int(p.max_hp)/1.5
+        self.hp = self.hp.__round__(2)
+        self.attack_damage = int(p.attack_damage)/1.8
+        choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze)
+        self.inventory = [choice(choices)]
 
 class EnemyTroll(Enemy):
     def __init__(self, p):
-        Enemy.__init__(self)
-        self.active_effect = None
+        Enemy.__init__(self)        
         self.xp_bonus = 25
         self.name = 'Troll'
         self.hp = int(p.max_hp)/1.5
@@ -359,8 +369,7 @@ class EnemyTroll(Enemy):
 
 class EnemyOrk(Enemy):            
     def __init__(self, p):
-        Enemy.__init__(self)
-        self.active_effect = None
+        Enemy.__init__(self)        
         self.xp_bonus = 50
         self.name = 'Ork'
         self.hp = int(p.max_hp)/1
