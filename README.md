@@ -1,5 +1,5 @@
 # TextRPG
-This is a Terminal/CMD based TextRPG written in Python.
+This is a Terminal/CMD based TextRPG written in Python3.
 
 Features:
 
@@ -12,7 +12,7 @@ Features:
 
 Link to exe: https://github.com/attax420/TextRPG/releases/download/alpha_release/TextRPG_0.16_alpha.exe
 
-If you want to run it from source, make sure you have the "termcolor" module installed (pip install termcolor).
+If you want to run it from source, make sure you have Python3 and the "termcolor" module installed (pip install termcolor).
 
 There is a "debug" and a "cheatmode" bool in main.py.
   -Setting "debug" to True prints certain debug informations every turn.
