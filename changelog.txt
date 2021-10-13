@@ -33,10 +33,6 @@
 #           -check for gained level works now
 #           -currently does not increase MP
 #           -many other bugfixes
-#
-#
-#
- 
 
 
 #   Changelog 0.11:
@@ -72,4 +68,3 @@
 #       -fixed some bugs
 #       -activated levelsystem
 #       -added showhp and showxp commands
- 
