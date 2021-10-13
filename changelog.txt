@@ -1,0 +1,75 @@
+#   Changelog 0.16:
+#       -level up now increases max MP
+
+
+#   Changelog 0.15:
+#       -added name variables to classes for inventory readability
+#       -added equip/unequip methods to Player class
+#           -only weapons at the moment
+#           -weapons add bonus to attack damage
+#       -added move for equip/unequip methods
+#       -added 3 weapon classes
+#       -added weapon objects to enemy inventory
+#       -added counter which removes status effects after some rounds
+#           -not working yet
+#       -added class SpellBlizzard(not implemented in gameloop yet)
+#           -makes damage and freezes for some rounds
+#           -character can't do anything while frozen
+#       -added bossfight: 
+#           -added class EnemyDragon
+#           -added EnemyDragon object(boss) to map
+#           -added randomized spawn coordinates for the boss
+#           -added function which moves player to other postion if 
+#            player and boss postion are the same
+#           -added 'fire' status effect for player
+#           -added fireball cast to the boss objects choices
+#           -added text for boss fight
+#       -changed player symbol to white square
+#       -added cheatmode bool to sourcecode for debugging purposes
+#       -refactored some code
+#       -added comments
+#       -fixed the levelsystem
+#           -required xp for a level now get subtracted from player xp correctly
+#           -check for gained level works now
+#           -currently does not increase MP
+#           -many other bugfixes
+#
+#
+#
+ 
+
+
+#   Changelog 0.11:
+#       -added XP and MP Potions
+#       -added "fireball" spell
+#       -enemies now drop one of the 3 potions after death
+#       -removed WIP GUI stuff until feature complete
+#       -fixed some bugs and probably implemented more
+#       KNOWN BUGS: 
+#           level system is still broken, untested behaviour when casted spell is not in list
+
+
+#   Changelog 0.10:
+#       -added "show inventory" move to list players items.
+#       -added usable health potions
+#       -added "+" field which heals and gives 1 health potion
+#       -added "showxp" move to, well, show the xp XD
+#       -fixed multiple small bugs
+#       -added tkinter based debug control interface(WIP)
+#       -started to rewrite some classes to ensure tkinter GUI support(WIP):
+#               removed some print statements from classes
+#               added returns for class methods that used print statements before
+
+
+#   Changelog 0.07:
+#       -implemented run away method to flee from fights
+#       -moved printed text for attack and defend to Character class
+#       FIXED BUGS:
+#           -Player could walk out of map boundaries
+
+
+#   Changelog 0.06:
+#       -fixed some bugs
+#       -activated levelsystem
+#       -added showhp and showxp commands
+ 
