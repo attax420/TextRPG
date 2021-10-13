@@ -1,7 +1,7 @@
 from classes import *
 
 debug = False
-cheatmode = True
+cheatmode = False
 p = Player()
 p.randomize_map()
 p.position_update()
@@ -217,6 +217,11 @@ while True:
             print('You see a Goblin crawling out of a hole on the ground. '
                     'It watches you for a few seconds and then starts to attack you!')
             e = EnemyGoblin(p)
+            mode = 'fight'
+            break
+        if field == 'dwarf':
+            print('You see a Dwarf fetching his axe while walking towards you... He jumps towards you and attacks!')
+            e = EnemyDwarf(p)
             mode = 'fight'
             break
         if field == 'ork':
