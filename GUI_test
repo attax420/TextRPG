@@ -1,0 +1,47 @@
+from tkinter import *
+from classes import *
+
+p = Player()
+p.randomize_map
+p.position_update
+
+a=10
+ 
+class Table:
+    def __init__(self,root, total_rows, total_columns):
+ 
+        # code for creating table
+        for i in range(total_rows):
+            for j in range(total_columns):
+ 
+                self.e = Entry(root, width=16, fg='blue',
+                font=('Arial',10,'bold'))
+ 
+                self.e.grid(row=i, column=j)
+                self.e.insert(END, p.map[i][j])
+ 
+# take the data
+p.map = [('Temp.Strand',a),
+('Temp. Kamer',18),
+('Temp. Keuken',20),
+('Temp. Zee',20),
+('Luchtdruk',1020.520),
+('Luchtdruk Max',1020.520),
+('Datum','22-01-2020 10:30'),
+('Luchtdruk Min',1020.520),
+('Datum','22-01-2020 10:30'),]
+ 
+# find total number of rows and
+# columns in list
+total_rows = len(p.map)
+total_columns = len(p.map[0])
+ 
+# create root window S
+ 
+root = Tk()
+ 
+##root.attributes("-fullscreen",True)
+root.configure(bg='black')
+ 
+t = Table(root, total_rows, total_columns)
+root.mainloop()
