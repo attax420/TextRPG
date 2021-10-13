@@ -18,3 +18,6 @@ If you want to run it from source, make sure you have Python3 and the "termcolor
 ## There is a "debug" and a "cheatmode" bool in main.py.
 		-Setting "debug" to True prints certain debug informations every turn.
 		-Setting "cheatmode" to True gives the Player 999999HP and 1000DMG.
+
+## Changelog:
+https://github.com/attax420/TextRPG/blob/main/changelog.txt
