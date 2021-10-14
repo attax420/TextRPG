@@ -11,7 +11,8 @@ if cheatmode:
     p.hp = 999999
 p_effectcounter = 0
 e_effectcounter = 0
-p.inventory.append(sword_diamond)
+p.xp = 8000
+
 # ######### PLAYER CONTROL FUNCTIONS ######### #
 def p_showmp(p):
     print('You have '+str(p.mp)+'MP left!')

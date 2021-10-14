@@ -12,8 +12,8 @@ if system().lower() == 'windows':
 class GameMap:
     def __init__(self):        
         self.map = []
-        self.map_x = 10
-        self.map_y = 10
+        self.map_x = 15
+        self.map_y = 15
         self.player_pos_x = int(choice(range(self.map_x -1)))
         self.player_pos_y = int(choice(range(self.map_y -1)))        
         self.boss_x = int(choice(range(self.map_x -1)))
@@ -222,7 +222,7 @@ class Player(Character, GameMap):
         if self.xp >= 100 and self.lvl < 2:
             self.lvl = 2            
             self.max_hp += 20
-            self.mp += 30
+            self.max_mp += 30
             self.mp = self.max_mp
             self.hp = self.max_hp
             if self.xp >= 100:
@@ -235,7 +235,7 @@ class Player(Character, GameMap):
             self.lvl = 3
             self.max_hp += 40
             self.hp = self.max_hp
-            self.mp += 60
+            self.max_mp += 60
             self.mp = self.max_mp
             if self.xp >= 200:
                 self.xp -= 200
@@ -246,7 +246,7 @@ class Player(Character, GameMap):
         if self.xp >= 400 and self.lvl < 4:
             self.lvl = 4            
             self.max_hp += 60
-            self.mp += 80
+            self.max_mp += 80
             self.mp = self.max_mp
             self.hp = self.max_hp
             if self.xp >= 400:
@@ -259,7 +259,7 @@ class Player(Character, GameMap):
             self.lvl = 5            
             self.max_hp += 100
             self.hp = self.max_hp
-            self.mp += 150
+            self.max_mp += 150
             self.mp = self.max_mp
             if self.xp >= 800:
                 self.xp -= 800
@@ -271,7 +271,7 @@ class Player(Character, GameMap):
             self.lvl = 6            
             self.max_hp += 130
             self.hp = self.max_hp
-            self.mp += 200
+            self.max_mp += 200
             self.mp = self.max_mp
             if self.xp >= 1600:
                 self.xp -= 1600
@@ -282,7 +282,7 @@ class Player(Character, GameMap):
         if self.xp >= 2000 and self.lvl < 7:
             self.lvl = 7            
             self.max_hp += 180
-            self.mp += 250
+            self.max_mp += 250
             self.mp = self.max_mp
             self.hp = self.max_hp
             if self.xp >= 2400:
@@ -295,7 +295,7 @@ class Player(Character, GameMap):
             self.lvl = 8            
             self.max_hp += 200
             self.hp = self.max_hp
-            self.mp += 300
+            self.max_mp += 300
             self.mp = self.max_mp
             self.xp = 0
             self.attack_damage = self.attack_damage * 3 + self.dmg_bonus
@@ -382,6 +382,16 @@ class EnemyOrk(Enemy):
         self.attack_damage = int(p.attack_damage)/1.5
         choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze, sword_bronze, sword_bronze, sword_steel)
         self.inventory = [choice(choices)]
+
+class EnemyOrkGeneral(Enemy):
+    def __init__(self, p):
+        Enemy.__init__(self)
+        self.xp_bonus = 75
+        self.name = 'Ork General'
+        self.hp = int(p.max_hp)*1.3
+        self.hp = self.hp.__round__(2)
+        self.attack_damage = int(p.attack_damage)/1.3
+        choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze, sword_bronze, sword_steel, sword_steel)
 
 class EnemyDragon(Enemy):
     def __init__(self, p):
