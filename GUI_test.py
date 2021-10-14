@@ -2,16 +2,70 @@ import threading
 from tkinter import *
 from classes import *
 from threading import *
-
+debug = False
 
 p = Player()
+mode = 'explore'
+p.randomize_map()
+
+def gamelogic():  
+    field = str(p.check_field())
+
+    if debug:
+        print('\n\n\n# ######### DEBUG BEGIN ######### #')
+        print('DEBUG field selection: '+str(field))
+        print('# ######### DEBUG END ######### #\n\n\n')
+    
+    if field == 'empty':        
+        p.position_update()
+        p.print_map()
+        return('There is nothing special here...')
+        
+    if field == 'visited':        
+        p.position_update()
+        p.print_map()
+        return('This place seems familiar...')
+        
+    if field == 'heal':        
+        p.hp = p.max_hp
+        p.inventory.append(healthpotion)
+        p.position_update()
+        p.print_map()
+        return('You feel much better now and also recieved a hp potion...')
+
+    if field == 'goblin':        
+        e = EnemyGoblin(p)
+        mode = 'fight'
+        return('You see a Goblin crawling out of a hole on the ground. '
+                'It watches you for a few seconds and then starts to attack you!')
+
+    if field == 'dwarf':        
+        e = EnemyDwarf(p)
+        mode = 'fight'
+        return('You see a Dwarf fetching his axe while walking towards you... He jumps towards you and attacks!')
+
+    if field == 'ork':        
+        e = EnemyOrk(p)
+        mode = 'fight'
+        return('You see a Ork agressively walking towards you... It immediately attacks you!')
+
+    if field == 'troll':        
+        e = EnemyTroll(p)
+        mode = 'fight'
+        return('You see a Troll stomping on the ground... It spotted you and looks like it wants to fight!')
+
+    if field == 'dragon':        
+        e = EnemyDragon(p)
+        mode = 'fight'
+        return('A huge Dragon appears in front of you! This will be a hard fight!')
+
+    else:
+        mode = 'explore'
 
 
-def gamelogic():
-    p.randomize_map()
+printed_text = gamelogic()
 
-# GameMap to Grid   
-def thread_window_map():
+while mode == 'explore':
     window_map = Tk()
     window_map_frame = Frame()
     window_button_frame = Frame()
@@ -74,23 +128,29 @@ def thread_window_map():
                 entry.insert(END, symbol)
     map_update()
 
+    
     sword_logo = PhotoImage(file='icon_small.png')
 
     def move_north():
-        p.move_north()        
+        p.move_north()
+        gamelogic()        
         map_update()
 
     def move_south():
-        p.move_south()        
+        p.move_south()  
+        gamelogic()      
         map_update()
         
     def move_east():
-        p.move_east()        
+        p.move_east()  
+        gamelogic()      
         map_update()
 
     def move_west():
         p.move_west()
+        gamelogic()
         map_update()
+
     button_go_north = Button(window_button_frame,
                 text='go north',
                 command=move_north,
@@ -155,14 +215,3 @@ def thread_window_map():
     window_button_frame.pack()
     window_map.configure(bg='black')
     window_map.mainloop()
-
-
-while True:
-
-    thread_gamelogic = threading.Thread(target=gamelogic())
-    thread_map = threading.Thread(target=thread_window_map())
-    
-
-    thread_gamelogic.start
-    thread_map.start
-    
