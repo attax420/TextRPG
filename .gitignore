@@ -1,5 +1,8 @@
 
+<<<<<<< Updated upstream
 scratch.py
+=======
+>>>>>>> Stashed changes
 main.spec
 icon.png
 icon.ico
@@ -20,3 +23,7 @@ build/main/base_library.zip
 build/main/Analysis-00.toc
 __pycache__/main.cpython-39.pyc
 __pycache__/classes.cpython-39.pyc
+<<<<<<< Updated upstream
+=======
+scratch.py
+>>>>>>> Stashed changes
