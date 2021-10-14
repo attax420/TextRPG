@@ -27,7 +27,7 @@ class GameMap:
         run = True        
         while run == True:
             if self.boss_x != self.player_pos_x or self.boss_y != self.player_pos_y:                
-                       self.map[self.player_pos_y][self.player_pos_x] = colored(' ','green','on_white')
+                       self.map[self.player_pos_y][self.player_pos_x] = colored(' ', 'green', 'on_white')
                        run = False
             else:
                 self.player_pos_x = int(choice(range(self.map_x -1)))
@@ -164,11 +164,15 @@ class Player(Character, GameMap):
                     'Feet': 'none'}
         self.dmg_bonus = 0
         
+    def update_dmg(self):
+        self.attack_damage = self.attack_damage + self.dmg_bonus
+
     def equip(self, item):        
         if item in weaponlist and item in self.inventory and self.weapon == None:
             self.weapon = item
             self.inventory.remove(item)
             self.dmg_bonus = item.dmg_bonus
+            self.update_dmg()
             return True
         return False
 
@@ -177,6 +181,7 @@ class Player(Character, GameMap):
             self.dmg_bonus = 0            
             self.inventory.append(item)            
             self.weapon = None
+            self.update_dmg()
             return True
         else:
             return False
