@@ -11,7 +11,7 @@ if cheatmode:
     p.hp = 999999
 p_effectcounter = 0
 e_effectcounter = 0
-
+p.inventory.append(sword_diamond)
 # ######### PLAYER CONTROL FUNCTIONS ######### #
 def p_showmp(p):
     print('You have '+str(p.mp)+'MP left!')
@@ -130,13 +130,13 @@ while True:
     while mode == 'explore':
         # ######### EXPLORE MODE PLAYER MOVES ######### #
         moves = ('go north', 'go east', 'go south', 'go west',
-                 'quit', 'show xp', 'show mp', 'show inventory', 'show hp',
+                 'quit', 'show stats', 'show inventory', 'show hp',
                  'use healthpotion', 'use manapotion', 'use xppotion'
                  'equip', 'unequip')
 
         move = str(input('\n What do you want to do? \n'
                             'go north, go east, go south, go west,\n'
-                            'show xp, show hp, show mp, show inventory,\n'
+                            'show stats, show inventory,\n'
                             'use healthpotion, use manapotion, use xppotion,\n'
                             'equip, unequip, quit\n->'))
         
@@ -167,11 +167,9 @@ while True:
         if move == 'quit':
             print('You commit suicide!')
             p.suicide()
-        if move == 'show xp':
-            p_showxp(p)
-        if move == 'show hp':
-            p_showhp(p)
-        if move == 'show mp':
+        if move == 'show stats':
+            p_showxp(p)        
+            p_showhp(p)        
             p_showmp(p)
         if move == 'use healthpotion':
             use_healthpotion(p)
