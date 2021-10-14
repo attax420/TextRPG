@@ -392,6 +392,7 @@ class EnemyOrkGeneral(Enemy):
         self.hp = self.hp.__round__(2)
         self.attack_damage = int(p.attack_damage)/1.3
         choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze, sword_bronze, sword_steel, sword_steel)
+        self.inventory = [choice(choices)]
 
 class EnemyDragon(Enemy):
     def __init__(self, p):

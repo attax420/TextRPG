@@ -224,9 +224,15 @@ while True:
             mode = 'fight'
             break
         if field == 'ork':
-            print('You see a Ork agressively walking towards you... It immediately attacks you!')
-            e = EnemyOrk(p)
-            mode = 'fight'
+            choices = ('ork','ork general')
+            choose = choice(choices)    
+            if choose == 'ork':
+                print('You see a Ork agressively walking towards you... It immediately attacks you!')
+                e = EnemyOrk(p)
+            if choose == 'ork general':
+                print('You see a Ork agressively walking towards you. It kinda looks fancy... It immediately attacks you!')
+                e = EnemyOrkGeneral(p)
+            mode = 'fight'            
             break
         if field == 'troll':
             print('You see a Troll stomping on the ground... It spotted you and looks like it wants to fight!')
