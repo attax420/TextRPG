@@ -195,16 +195,19 @@ while True:
             print('\n\n\n# ######### DEBUG BEGIN ######### #')
             print('DEBUG field selection: '+str(field))
             print('# ######### DEBUG END ######### #\n\n\n')
+            
         if field == 'empty':
             print('There is nothing special here...')
             p.position_update()
             p.print_map()
             break
+
         if field == 'visited':
             print('This place seems familiar...')
             p.position_update()
             p.print_map()
             break
+
         if field == 'heal':
             print('You feel much better now and also recieved a hp potion...')
             p.hp = p.max_hp
@@ -212,17 +215,20 @@ while True:
             p.position_update()
             p.print_map()
             break
+
         if field == 'goblin':
             print('You see a Goblin crawling out of a hole on the ground. '
                     'It watches you for a few seconds and then starts to attack you!')
             e = EnemyGoblin(p)
             mode = 'fight'
             break
+
         if field == 'dwarf':
             print('You see a Dwarf fetching his axe while walking towards you... He jumps towards you and attacks!')
             e = EnemyDwarf(p)
             mode = 'fight'
             break
+
         if field == 'ork':
             choices = ('ork','ork general')
             choose = choice(choices)    
@@ -234,11 +240,13 @@ while True:
                 e = EnemyOrkGeneral(p)
             mode = 'fight'            
             break
+
         if field == 'troll':
             print('You see a Troll stomping on the ground... It spotted you and looks like it wants to fight!')
             e = EnemyTroll(p)
             mode = 'fight'
-            break        
+            break     
+
         if field == 'dragon':
             print('A huge Dragon appears in front of you! This will be a hard fight!')
             e = EnemyDragon(p)
