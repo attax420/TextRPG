@@ -12,6 +12,7 @@ if cheatmode:
 p_effectcounter = 0
 e_effectcounter = 0
 
+
 # ######### PLAYER CONTROL FUNCTIONS ######### #
 def p_showmp(p):
     print('You have '+str(p.mp)+'MP left!')
@@ -130,13 +131,13 @@ while True:
     while mode == 'explore':
         # ######### EXPLORE MODE PLAYER MOVES ######### #
         moves = ('go north', 'go east', 'go south', 'go west',
-                 'quit', 'show xp', 'show mp', 'show inventory', 'show hp',
+                 'quit', 'show stats', 'show inventory', 'show hp',
                  'use healthpotion', 'use manapotion', 'use xppotion'
                  'equip', 'unequip')
 
         move = str(input('\n What do you want to do? \n'
                             'go north, go east, go south, go west,\n'
-                            'show xp, show hp, show mp, show inventory,\n'
+                            'show stats, show inventory,\n'
                             'use healthpotion, use manapotion, use xppotion,\n'
                             'equip, unequip, quit\n->'))
         
@@ -167,11 +168,9 @@ while True:
         if move == 'quit':
             print('You commit suicide!')
             p.suicide()
-        if move == 'show xp':
-            p_showxp(p)
-        if move == 'show hp':
-            p_showhp(p)
-        if move == 'show mp':
+        if move == 'show stats':
+            p_showxp(p)        
+            p_showhp(p)        
             p_showmp(p)
         if move == 'use healthpotion':
             use_healthpotion(p)
@@ -196,16 +195,19 @@ while True:
             print('\n\n\n# ######### DEBUG BEGIN ######### #')
             print('DEBUG field selection: '+str(field))
             print('# ######### DEBUG END ######### #\n\n\n')
+            
         if field == 'empty':
             print('There is nothing special here...')
             p.position_update()
             p.print_map()
             break
+
         if field == 'visited':
             print('This place seems familiar...')
             p.position_update()
             p.print_map()
             break
+
         if field == 'heal':
             print('You feel much better now and also recieved a hp potion...')
             p.hp = p.max_hp
@@ -213,27 +215,38 @@ while True:
             p.position_update()
             p.print_map()
             break
+
         if field == 'goblin':
             print('You see a Goblin crawling out of a hole on the ground. '
                     'It watches you for a few seconds and then starts to attack you!')
             e = EnemyGoblin(p)
             mode = 'fight'
             break
+
         if field == 'dwarf':
             print('You see a Dwarf fetching his axe while walking towards you... He jumps towards you and attacks!')
             e = EnemyDwarf(p)
             mode = 'fight'
             break
+
         if field == 'ork':
-            print('You see a Ork agressively walking towards you... It immediately attacks you!')
-            e = EnemyOrk(p)
-            mode = 'fight'
+            choices = ('ork','ork general')
+            choose = choice(choices)    
+            if choose == 'ork':
+                print('You see a Ork agressively walking towards you... It immediately attacks you!')
+                e = EnemyOrk(p)
+            if choose == 'ork general':
+                print('You see a Ork agressively walking towards you. It kinda looks fancy... It immediately attacks you!')
+                e = EnemyOrkGeneral(p)
+            mode = 'fight'            
             break
+
         if field == 'troll':
             print('You see a Troll stomping on the ground... It spotted you and looks like it wants to fight!')
             e = EnemyTroll(p)
             mode = 'fight'
-            break        
+            break     
+
         if field == 'dragon':
             print('A huge Dragon appears in front of you! This will be a hard fight!')
             e = EnemyDragon(p)

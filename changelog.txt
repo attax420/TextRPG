@@ -1,3 +1,9 @@
+#   Changelog 0.17:
+        -fixed an issue that caused MP to not increase on level up.
+        -switched to nuikta for building .exe
+        -added 1 enemy type 
+
+
 #   Changelog 0.16:
 #       -level up now increases max MP
 
