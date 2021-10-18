@@ -8,7 +8,7 @@
 		-inventory system
 		-level system
 		-bossfight
-		-packed with pyinstaller so doesn't require Python to be installed.
+		-translated to C with nuikta and then compiled with mingw64 so doesn't require Python to be installed.
 
 ## Link to exe: 
 https://github.com/attax420/TextRPG/releases/tag/alpha_release0.17
