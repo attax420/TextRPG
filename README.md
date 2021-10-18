@@ -11,7 +11,7 @@
 		-packed with pyinstaller so doesn't require Python to be installed.
 
 ## Link to exe: 
-https://github.com/attax420/TextRPG/releases/download/alpha_release/TextRPG_0.16_alpha.exe
+https://github.com/attax420/TextRPG/releases/download/
 
 If you want to run it from source, make sure you have Python3 and the "termcolor" module installed (pip install termcolor).
 
