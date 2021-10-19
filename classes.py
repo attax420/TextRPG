@@ -346,7 +346,7 @@ class EnemyGoblin(Enemy):
         self.name = 'Goblin'
         self.hp = int(p.max_hp)/2
         self.hp = self.hp.__round__(2)        
-        self.attack_damage = int(p.attack_damage)/4
+        self.attack_damage = int(p.hp)/10
         choices = [healthpotion,manapotion,xppotion]
         self.inventory = [choice(choices)]
 
@@ -357,7 +357,7 @@ class EnemyDwarf(Enemy):
         self.name = 'Dwarf'
         self.hp = int(p.max_hp)/1.5
         self.hp = self.hp.__round__(2)
-        self.attack_damage = int(p.attack_damage)/1.8
+        self.attack_damage = int(p.hp)/9
         choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze)
         self.inventory = [choice(choices)]
 
@@ -368,7 +368,7 @@ class EnemyTroll(Enemy):
         self.name = 'Troll'
         self.hp = int(p.max_hp)/1.5
         self.hp = self.hp.__round__(2)
-        self.attack_damage = int(p.attack_damage)/2
+        self.attack_damage = int(p.hp)/8
         choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze)
         self.inventory = [choice(choices)]
 
@@ -379,7 +379,7 @@ class EnemyOrk(Enemy):
         self.name = 'Ork'
         self.hp = int(p.max_hp)/1
         self.hp = self.hp.__round__(2)
-        self.attack_damage = int(p.attack_damage)/1.5
+        self.attack_damage = int(p.hp)/5
         choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze, sword_bronze, sword_bronze, sword_steel)
         self.inventory = [choice(choices)]
 
@@ -390,7 +390,7 @@ class EnemyOrkGeneral(Enemy):
         self.name = 'Ork General'
         self.hp = int(p.max_hp)*1.3
         self.hp = self.hp.__round__(2)
-        self.attack_damage = int(p.attack_damage)/1.3
+        self.attack_damage = int(p.hp)/3
         choices = (healthpotion, manapotion, xppotion, healthpotion, manapotion, xppotion, sword_bronze, sword_bronze, sword_steel, sword_steel)
         self.inventory = [choice(choices)]
 
@@ -511,8 +511,8 @@ class SpellFireball(Spell):
     def __init__(self):        
         Spell.__init__(self)
         self.name = 'Fireball'
-        self.dmg = 50
-        self.mana_usage = 20
+        self.dmg = p.lvl*50
+        self.mana_usage = p.lvl*20/p.lvl
         self.effect_dmg = 5
         self.effect = 'fire'
 
@@ -521,14 +521,15 @@ class SpellBlizzard(Spell):
     def __init__(self):
         Spell.__init__(self)
         self.name = 'Blizzard'
-        self.dmg = 50
-        self.mana_usage = 30
+        self.dmg = p.lvl*50
+        self.mana_usage = p.lvl*30/p.lvl
         self.effect_dmg = 0
         self.effect = 'ice'
 # end SPELLS #
 
 
 # ######### Objects ######### #
+p = Player()
 healthpotion = PotionHP()
 manapotion = PotionMP()
 xppotion = PotionXP()

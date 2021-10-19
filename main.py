@@ -1,31 +1,31 @@
 from classes import *
 
-debug = False
-cheatmode = False
-p = Player()
+debug = True
+cheatmode = True
 p.randomize_map()
 p.position_update()
 p.print_map()
 if cheatmode:
     p.attack_damage = 1000
     p.hp = 999999
+    p.xp = 999999
 p_effectcounter = 0
 e_effectcounter = 0
 
 
 # ######### PLAYER CONTROL FUNCTIONS ######### #
 def p_showmp(p):
-    print('You have '+str(p.mp)+'MP left!')
+    print(f'You have {str(p.mp)} MP left!')
 
 def p_showxp(p):
     xp, lvl = p.showxp()
-    print('You have ' + str(xp) + 'XP and are on LVL' + str(lvl)+'!')
+    print(f'You have {str(xp)} XP and are on LVL {str(lvl)}!')
 
 def p_showhp(p):
-    print('You have ' + str(p.hp) + 'HP left!')
+    print(f'You have {str(p.hp)} HP left!')
 
 def e_showhp(e):
-    print('The ' + e.name + ' has ' + str(e.hp) + 'HP left!')
+    print(f'The  {e.name}  has {str(e.hp)} HP left!')
 
 def show_inventory(p):
     for i in p.inventory:
@@ -46,7 +46,7 @@ def equip(p):
             item_out = None
             raise ValueError          
         p.equip(item_out)
-        print('You equipped the '+str(item_out.name)+'!')
+        print(f'You equipped the {str(item_out.name)}!')
         
     except ValueError:
         print('Enter an item from the list to equip!')
@@ -67,7 +67,7 @@ def unequip(p):
             raise ValueError
 
         p.unequip(item_out)
-        print('You unequipped the '+str(item_out.name)+'!')        
+        print(f'You unequipped the {str(item_out.name)}!')        
 
     except ValueError:
         print('Enter an item from the list to unequip!')
@@ -79,7 +79,7 @@ def use_healthpotion(p):
     if not exec and state == 'not available':
         print ('You don\'t have this item!')
     if exec:
-        print('You used a Health Potion and recieved '+str(healthpotion.hp_bonus)+'HP!')
+        print(f'You used a Health Potion and recieved {str(healthpotion.hp_bonus)} HP!')
 
 def use_manapotion(p):
     exec, state = p.use_item(manapotion)
@@ -88,7 +88,7 @@ def use_manapotion(p):
     if not exec and state == 'not available':
         print ('You don\'t have this item!')
     if exec:
-        print('You used a Mana Potion and recieved '+str(manapotion.mp_bonus)+'MP!')
+        print(f'You used a Mana Potion and recieved {str(manapotion.mp_bonus)} MP!')
 
 def use_xppotion(p):    
     exec, state = p.use_item(xppotion)
@@ -97,7 +97,7 @@ def use_xppotion(p):
     if not exec and state == 'not available':
         print ('You don\'t have this item!')
     if exec:
-        print('You used a XP Potion and recieved '+str(xppotion.xp_bonus)+'XP!')
+        print(f'You used a XP Potion and recieved {str(xppotion.xp_bonus)} XP!')
     print(p.lvl_up())
     
 def cast_spell(p, e): 
@@ -113,9 +113,14 @@ def cast_spell(p, e):
             print(i)
         spell_select = input('->')
         
-    if spell_select == 'fireball' and p.mp >=20:
+    if spell_select == 'fireball' and p.mp >= p.lvl*20/p.lvl:
         spellfireball.cast(p, e)
-        print('You casted a fireball! It did '+str(spellfireball.dmg)+'DMG and the '+e.name+' is burning now!')        
+        print(f'You casted a fireball! It did {str(spellfireball.dmg)} DMG and the {e.name} is burning now!')        
+    
+    elif spell_select == 'blizzard' and p.mp >= p.lvl*30/p.lvl:
+        spellblizzard.cast(p, e)
+        print(f'You casted a {spellblizzard.name}! It did {str(spellblizzard.dmg)} DMG and the {e.name} is frozen now!')    
+            
     else:
         print('You dont have enough MP!')
 # end PLAYER CONTROL FUNCTIONS #
@@ -286,30 +291,36 @@ while True:
         if p.active_effect == 'fire':            #for bossfight
             dmg = 10
             p.hp -= dmg
-            print('You are burning and recieved '+str(dmg)+' additional DMG!')
+            print(f'You are burning and recieved {str(dmg)} additional DMG!')
             p_effectcounter += 1
             if p_effectcounter == 3:
                 p.active_effect == None
                 p_effectcounter = 0
 
         if e.active_effect == 'fire':            
-            print('The ' + e.name + ' is burning and recieved ' + str(spellfireball.effect_dmg) + ' additional DMG!')
+            print(f'The {e.name}  is burning and recieved {str(spellfireball.effect_dmg)} additional DMG!')
             e.hp -= spellfireball.effect_dmg
             e_effectcounter += 1
-            if p_effectcounter == 3:
-                e.active_effect == None
+            if e_effectcounter == 3:                
                 e_effectcounter = 0
+                e.active_effect = 'none'
 
         elif e.active_effect == 'ice':
-            e_choice = 0
-            print('The '+e.name+' is frozen and can\'t do anything')
+            e_choice = 'frozen'
+            print(f'The {e.name} is frozen and can\'t do anything')
+            e_effectcounter += 1
+            if e_effectcounter == 2:                
+                e_effectcounter = 0
+                e.active_effect = 'none'
         else:          
             e_choice = choice(e_move_choices)                        
         # end ENEMY EFFECTS AND MOVE SELECTION #
+        if debug:
+            print(f'DEBUG p.active_effect:{p.active_effect}')
+            print(f'DEBUG p_effectcounter:{p_effectcounter}')
+            print(f'DEBUG e.active_effect:{e.active_effect}')
+            print(f'DEBUG e_effectcounter:{e_effectcounter}')
 
-        # ######### BOSS SPECIFIC STUFF ######### #
-                 
-        # end BOSS SPECIFIC STUFF #
 
         # ######### PLAYER MOVE SELECTION ######### #
         moves = ('attack', 'defend', 'cast spell', 'use manapotion', 'use healthpotion', 'run away')
@@ -325,47 +336,56 @@ while True:
             use_manapotion(p)
         if move == 'use healthpotion':
             use_healthpotion(p)          
+
         if move == 'cast spell':
             if e_choice == 'defend':
                 e.defend()
-                print('The '+e.name+' is defending!')
-            cast_spell(p, e)
-            e.attack(e, p)
-            if e_choice == 1:
-                print('The '+e.name+' attacks you for '+str(e.attack_damage)+' DMG!')            
+                print(f'The {e.name} is defending!')
+                    
+            if e_choice == 'attack':
+                e.attack(e, p)
+                print(f'The {e.name} attacks you for {str(e.attack_damage)} DMG!')   
+
+            cast_spell(p, e)           
+            
+
         if move == 'run away':
             success = p.run_away(e)
             if success:
-                print('You successfully escaped the '+e.name+'!')
+                print(f'You successfully escaped the {e.name}!')
                 mode = 'explore'
                 p.position_update()
                 p.print_map()
                 break
             if not success:
-                print('You tried to run away, but the '+e.name+' is faster than you. The fight continues')
+                print(f'You tried to run away, but the {e.name} is faster than you. The fight continues')
                 mode = 'fight'
-                e.attack(e, p)                   
+                e.attack(e, p)     
+
         if move == 'attack':
             if e_choice == 'defend':
                 e.defend()
-                print('The '+e.name+' is defending!')
+                print(f'The {e.name} is defending!')
+
             p.attack(p, e)
-            print('You attack the '+str(e.name)+' for '+str(p.attack_damage)+' DMG!')
+
+            print(f'You attack the {str(e.name)} for {str(p.attack_damage)} DMG!')
         # end PLAYER MOVE SELECTION #
 
         # ######### ENEMY DEATH ######### #
         if e.hp <= 0:
-            print('You killed the '+str(e.name)+' and got '+str(e.xp_bonus)+'XP!')            
+            print(f'You killed the {str(e.name)} and got {str(e.xp_bonus)} XP!')            
             print('Loot recieved: ')
             for i in e.inventory:
                 print(i.name)     
             if e.name == 'Dragon':
                 print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
                       'Congratulations!!!\n'
-                      'You finished the game!!!\n'
-                      'You are free to explore the rest of the world!\n'
+                      'You finished the game!!!\n'                      
+                      'You are free to explore the rest of the world and recieved a new spell and some items!\n'
                       'TextRPG created by: Alexander \'aTTaX\' Müller\n\n\n')
                 p.map[p.boss_y][p.boss_x] = colored('X', 'blue')
+                p.spells.append('blizzard')
                 sleep(5)
                  
             for i in e.inventory:
@@ -379,7 +399,8 @@ while True:
 
         if debug:
             print('\n\n\n# ######### DEBUG BEGIN ######### #')
-            print('DEBUG player action: '+p.action)
+            print(f'DEBUG player action: {str(p.action)}')
+            print(f'DEBUG enemy action: {str(e.action)}')
             print('# ######### DEBUG END ######### #\n\n\n')
         # ######### ENEMY ATTACK ######### #
         if e_choice == 'attack':
@@ -387,19 +408,19 @@ while True:
                 p.defend()
                 print('You are defending!')
             e.attack(e, p)
-            print('The '+e.name+' attacks you for '+str(e.attack_damage)+' DMG!')
+            print(f'The {e.name} attacks you for {str(e.attack_damage)} DMG!')
             
         if e_choice == 'fireball':
             if move == 'defend':
                 p.defend()
                 print('You are defending!')
             spellfireball.cast(e,p)
-            print('The '+e.name+' casts a fireball on you for '+str(spellfireball.dmg)+' DMG!')
+            print(f'The {e.name} casts a fireball on you for {str(spellfireball.dmg)} DMG!')
         # end ENEMY ATTACK #
 
         # ######### PLAYER DEATH ######### #        
         if p.hp <= 0:
-            print('You were killed by the '+e.name+'! Rest in peace...')
+            print(f'You were killed by the {e.name}! Rest in peace...')
             p.death()
         # end PLAYER DEATH #
     # end FIGHT MODE #  
