@@ -6,7 +6,8 @@ from platform import system
 
 if system().lower() == 'windows':
     os.system('color')
-
+if system().lower() == 'linux':
+    import readline
 
 # ######### MAP ######### #
 class GameMap:
